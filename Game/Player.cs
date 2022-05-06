@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _defeatMenu;
     [SerializeField] private GameObject _timeLine;
     public GameObject Prossesing;
+    
     // Статы
     [Header("Stats")]
     [SerializeField] private int[] _mainStats = new int[3]; // хп, скорость, сила прыжка
