@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "EnemyKiller")
         {
             _mainStats[1]--;
-            _animMHp.SetBool("MHp", true);
+            _animMHp.SetBool("Mhp", true);
             StartCoroutine("StopMHp");
         }
         if (other.gameObject.tag == "PlatformUp")
@@ -277,7 +277,7 @@ public class Player : MonoBehaviour
     IEnumerator StopMHp()
     {
         yield return new WaitForSeconds(0.3f);
-        _animMHp.SetBool("MHp", false);
+        _animMHp.SetBool("Mhp", false);
     }
     IEnumerator StopMoney()
     {

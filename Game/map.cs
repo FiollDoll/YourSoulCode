@@ -8,6 +8,7 @@ public class map : MonoBehaviour
     [Header("TotalWorld")]
     public int TotalWorld;
     [Header("Other")]
+    [SerializeField] private award _script;
     public int moneyGame;
     public GameObject Player;
     public GameObject camera;
@@ -34,6 +35,7 @@ public class map : MonoBehaviour
 
     void Start()
     {
+        _script = GetComponent<award>();
         PlatformOnInt = PlayerPrefs.GetInt("PlatformOnInt");
         PlatformOnInt1 = PlayerPrefs.GetInt("PlatformOnInt1");
         PlatformOnInt2 = PlayerPrefs.GetInt("PlatformOnInt2");
@@ -41,10 +43,16 @@ public class map : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "NegativTeleport")
+        if (other.gameObject.tag == "NegativTeleport" && other.gameObject.name != "PortalEnd")
         {
             negativ = true;
             _negativEffect.gameObject.SetActive(true);
+        }
+        if (other.gameObject.tag == "NegativTeleport" && other.gameObject.name == "PortalEnd")
+        {
+            _script.awardGenerate();
+            negativ = false;
+            _negativEffect.gameObject.SetActive(false);
         }
     }
     void OnCollisionEnter2D(Collision2D other)

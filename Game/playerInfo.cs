@@ -12,9 +12,9 @@ public class playerInfo : MonoBehaviour
     {
         if (character == 0)
         {
-            speed = 7;
-            hp = 3;
-            jumpp = 1350;
+            speed = 9;
+            hp = 4;
+            jumpp = 1400;
         }
     }
 }
