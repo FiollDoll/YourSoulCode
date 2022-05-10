@@ -43,7 +43,6 @@ public class Player : MonoBehaviour
     
     [Header("Xp")]
     public int xpGame; //Получение в игре
-    [SerializeField] private int _xpTotal; //Для цикла
     [SerializeField] private int _xp;
     [SerializeField] private Text _xpText;
 
@@ -53,6 +52,7 @@ public class Player : MonoBehaviour
     private playerInfo _script; // PlayerInfo. Статы
     private map _script1;
     private award _script2;
+    private walk _script3;
     [SerializeField] private bool _negativ;
 
     [Header("Guys")]
@@ -69,6 +69,8 @@ public class Player : MonoBehaviour
         _script = GetComponent<playerInfo>();
         _script1 = GetComponent<map>();
         _script2 = GetComponent<award>();
+        _script3 = GetComponent<walk>();
+
         _timeLine.gameObject.SetActive(true);
         _timeRemaning = 7;
         // Статы
@@ -100,36 +102,8 @@ public class Player : MonoBehaviour
         GuyMenu.gameObject.SetActive(menu);
         buttonGuy.gameObject.SetActive(button);
     }
-    public void OpenBadGuyMenu()
-    {
-        menuOpen(true, false);
-    }
-    //Первый дух
-    public void BadGuyPlay()
-    {
-        RandomNum = Random.Range(0, 2);
-        if (RandomNum == 0)
-        {
-            mainStats[0] += 1;
-            textChange(true, false, false);
-        }
-        else if (RandomNum == 1)
-        {
-            mainStats[1]--;
-            _animMHp.SetBool("MHp", true);
-            StartCoroutine("StopMHp");
-            textChange(false, true, false);
-        }
-        else
-        {
-            mainStats[1]++;
-            textChange(false, false, true);
-        }
-    }
-    public void CloseBadGuyMenu()
-    {
-        menuOpen(false, true);
-    }
+
+
     //Продолжение
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -157,7 +131,6 @@ public class Player : MonoBehaviour
         {
             mainStats[0] -= 3;
         }
-        _onGround = true;
     }
     void OnCollisionExit2D(Collision2D other)
     {
@@ -165,7 +138,6 @@ public class Player : MonoBehaviour
         {
             mainStats[0] = _script.speed;
         }
-        _onGround = false;
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -227,6 +199,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         _negativ = _script1.negativ;
+        _onGround = _script3.onGround;
         if (_onGround == false)
         {
             mainStats[2] = 0;
@@ -258,8 +231,7 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine("StopMoney");
             }
-            StartCoroutine("StartXp");
-            _xp = _xp + _xpTotal;
+            _xp = _xp + xpGame;
         }
         else
         {
@@ -306,15 +278,7 @@ public class Player : MonoBehaviour
         money += moneyTotal;
         PlayerPrefs.SetInt("money", money);
         yield return new WaitForSeconds(1);
-        xpGame = xpGame + moneyTotal * 10;
-    }
-    IEnumerator StartXp()
-    {
-        _xpTotal = 0;
-        while(_xpTotal <= xpGame)
-        {
-            _xpTotal++;
-        }
+        xpGame = xpGame + moneyTotal * 10 + _script2.xp;
     }
     IEnumerator StopJump()
     {

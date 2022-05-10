@@ -7,27 +7,35 @@ public class map : MonoBehaviour
 {
     [Header("TotalWorld")]
     public int TotalWorld;
+    
     [Header("Other")]
-    [SerializeField] private award _script;
+    private award _script;
+    private bool negativEnd = true;
+
     public int moneyGame;
     public GameObject Player;
     public GameObject camera;
     public GameObject[] textLocation = new GameObject[2];
     [SerializeField] private GameObject _negativEffect;
     public bool negativ;
+    
     [Header("Platform")]
     public int PlatformTotal;
     public GameObject[] Platform = new GameObject[22];
     public GameObject PlatformStartGo;
     private GameObject[] platformNegativ = new GameObject[1];
+    
     [Header("Platform1")] //2 - второй мир
     public GameObject[] Platform1 = new GameObject[8];
+    
     [Header("Platform2")] //2 - третий мир
     public GameObject Platforme;
     public GameObject Platform1e;
+    
     [Header("Platform+")]
     public GameObject Platforms;
     public bool PlatformSpawned;
+    
     [Header("Spawners")]
     public Transform Spawner;
 
@@ -43,11 +51,12 @@ public class map : MonoBehaviour
             negativ = true;
             _negativEffect.gameObject.SetActive(true);
         }
-        if (other.gameObject.tag == "NegativTeleport" && other.gameObject.name == "PortalEnd")
+        if (other.gameObject.tag == "NegativTeleport" && other.gameObject.name == "PortalEnd" && negativEnd == true)
         {
             _script.awardGenerate();
             negativ = false;
             _negativEffect.gameObject.SetActive(false);
+            negativEnd = false;
         }
     }
     void OnCollisionEnter2D(Collision2D other)
