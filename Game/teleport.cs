@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class teleport : MonoBehaviour
 {
-    public Transform teleportEnd;
+    [SerializeField] private Transform _teleportEnd;
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
-            other.transform.position = new Vector3(teleportEnd.transform.position.x, teleportEnd.transform.position.y, 0);
+            other.transform.position = new Vector3(_teleportEnd.transform.position.x, _teleportEnd.transform.position.y, 0);
         }
     }
 }

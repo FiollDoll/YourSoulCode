@@ -29,15 +29,15 @@ public class ad : MonoBehaviour, IUnityAdsListener
     }
     public void OnUnityAdsReady(string placementId)
     {
-        Debug.Log("Ready");
+
     }
     public void OnUnityAdsDidError(string message)
     {
-        Debug.Log("Error");
+
     }
     public void OnUnityAdsDidStart(string placementId)
     {
-        Debug.Log("Start");
+
     }
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {
@@ -54,7 +54,7 @@ public class ad : MonoBehaviour, IUnityAdsListener
         Debug.Log("Vso");
         yield return new WaitForSeconds(2);
         newLive = false;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(4);
         hp = 0;
     }
 }

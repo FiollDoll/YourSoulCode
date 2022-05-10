@@ -14,6 +14,12 @@ public class playerInfo : MonoBehaviour
         {
             speed = 9;
             hp = 4;
+            jumpp = 1500;
+        }
+        if (character == 1)
+        {
+            speed = 8;
+            hp = 6;
             jumpp = 1400;
         }
     }

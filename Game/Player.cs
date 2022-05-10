@@ -31,9 +31,7 @@ public class Player : MonoBehaviour
     
     // Статы
     [Header("Stats")]
-    [SerializeField] private int[] _mainStats = new int[3]; // хп, скорость, сила прыжка
-    [SerializeField] private int _fakeHp;
-    [SerializeField] private Text _hpText;
+    public int[] mainStats = new int[3]; // хп, скорость, сила прыжка
     // Сделать список
     private int money; // Деньги
     public int moneyGame; // Деньги внутри уровня
@@ -42,11 +40,19 @@ public class Player : MonoBehaviour
     [SerializeField] private Text _moneyTextTotal;
     public bool moneyTrue = true; // Получение
     [SerializeField] private Text _moneyText;
+    
+    [Header("Xp")]
+    public int xpGame; //Получение в игре
+    [SerializeField] private int _xpTotal; //Для цикла
+    [SerializeField] private int _xp;
+    [SerializeField] private Text _xpText;
 
     [Header("Other")]
     public bool newLive;
+    //Скрипты
     private playerInfo _script; // PlayerInfo. Статы
     private map _script1;
+    private award _script2;
     [SerializeField] private bool _negativ;
 
     [Header("Guys")]
@@ -62,22 +68,24 @@ public class Player : MonoBehaviour
     {
         _script = GetComponent<playerInfo>();
         _script1 = GetComponent<map>();
+        _script2 = GetComponent<award>();
         _timeLine.gameObject.SetActive(true);
         _timeRemaning = 7;
         // Статы
         character = PlayerPrefs.GetInt("character");
         money = PlayerPrefs.GetInt("money");
+        _xp = PlayerPrefs.GetInt("xp");
         _script.CharacterTotal(character);
-        _mainStats[0] = _script.speed;
-        _mainStats[1] = _script.hp;
-        _mainStats[2] = _script.jumpp;
+        mainStats[0] = _script.speed;
+        mainStats[1] = _script.hp;
+        mainStats[2] = _script.jumpp;
         // Аниматик
         _anim = GetComponent<Animator>();
         _animMHp = _MHp.GetComponent<Animator>();
     }
     public void Jump()
     {
-        _rb.AddForce(new Vector2(0, _mainStats[2] * 16));
+        _rb.AddForce(new Vector2(0, mainStats[2] * 16));
         //anim.SetBool("Jump", true);
         StartCoroutine("StopJump");
     }
@@ -102,19 +110,19 @@ public class Player : MonoBehaviour
         RandomNum = Random.Range(0, 2);
         if (RandomNum == 0)
         {
-            _mainStats[0] += 1;
+            mainStats[0] += 1;
             textChange(true, false, false);
         }
         else if (RandomNum == 1)
         {
-            _mainStats[1]--;
+            mainStats[1]--;
             _animMHp.SetBool("MHp", true);
             StartCoroutine("StopMHp");
             textChange(false, true, false);
         }
         else
         {
-            _mainStats[1]++;
+            mainStats[1]++;
             textChange(false, false, true);
         }
     }
@@ -128,7 +136,7 @@ public class Player : MonoBehaviour
         //Изменение хп
         if (other.gameObject.tag == "EnemyKiller")
         {
-            _mainStats[1]--;
+            mainStats[1]--;
             _animMHp.SetBool("Mhp", true);
             StartCoroutine("StopMHp");
         }
@@ -139,15 +147,15 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.name == "platformDebaff")
         {
-            _mainStats[0] -= 1;
+            mainStats[0] -= 1;
         }
         if (other.gameObject.name == "platformDebaff1")
         {
-            _mainStats[0] -= 2;
+            mainStats[0] -= 2;
         }
         if (other.gameObject.name == "platformDebaff2")
         {
-            _mainStats[0] -= 3;
+            mainStats[0] -= 3;
         }
         _onGround = true;
     }
@@ -155,7 +163,7 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.name == "platformDebaff" || other.gameObject.name == "platformDebaff1" || other.gameObject.name == "platformDebaff2")
         {
-            _mainStats[0] = _script.speed;
+            mainStats[0] = _script.speed;
         }
         _onGround = false;
     }
@@ -163,17 +171,17 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "BonusSpeed")
         {
-            _mainStats[0] += 1;
+            mainStats[0] += 1;
             other.gameObject.SetActive(false);
         }
         if (other.gameObject.tag == "BonusJump") //Изменено было
         {
-            _mainStats[1]++;
+            mainStats[1]++;
             other.gameObject.SetActive(false);
         }
         if (other.gameObject.tag == "BonusHp")
         {
-            _mainStats[1]++;
+            mainStats[1]++;
             other.gameObject.SetActive(false);
         }
         if (other.gameObject.tag == "GlitchGuy" && other.gameObject.name == "GuyBad")
@@ -194,11 +202,11 @@ public class Player : MonoBehaviour
         //Убрать
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _rb.AddForce(new Vector2(0, _mainStats[2] * 5));
+            _rb.AddForce(new Vector2(0, mainStats[2] * 5));
         }
         //Движение
         _moveInput = _joystick.Horizontal;
-        _rb.velocity = new Vector2(_moveInput * _mainStats[0], 0);
+        _rb.velocity = new Vector2(_moveInput * mainStats[0], 0);
         if (_moveInput < 0)
         {
             _playerBody.flipX = false;
@@ -221,7 +229,7 @@ public class Player : MonoBehaviour
         _negativ = _script1.negativ;
         if (_onGround == false)
         {
-            _mainStats[2] = 0;
+            mainStats[2] = 0;
             //anim.SetBool("Jump", true);
             if (_timeRemaning > 0)
             {
@@ -229,27 +237,29 @@ public class Player : MonoBehaviour
             }
             else if (_timeRemaning < 0)
             {
-                _mainStats[1] = 0;
+                mainStats[1] = 0;
             }
         }
         else
         {
             //anim.SetBool("Jump", false);
-            _mainStats[2] = _script.jumpp;
+            mainStats[2] = _script.jumpp;
             _timeRemaning = 7;
         }
         newLive = _play.GetComponent<ad>().newLive; //Получение из другого скрипта
-        if (_mainStats[1] <= 0) //Смерть
+        if (mainStats[1] <= 0) //Смерть
         {
             _defeatMenu.gameObject.SetActive(true);
-            _mainStats[0] = 0;
-            _mainStats[2] = 0;
+            mainStats[0] = 0;
+            mainStats[2] = 0;
             //GE.intensity = 0;
-            _mainStats[1] = _play.GetComponent<ad>().hp; //Получение из другого скрипта
+            mainStats[1] = _play.GetComponent<ad>().hp; //Получение из другого скрипта
             if (moneyTrue == true)
             {
                 StartCoroutine("StopMoney");
             }
+            StartCoroutine("StartXp");
+            _xp = _xp + _xpTotal;
         }
         else
         {
@@ -257,28 +267,34 @@ public class Player : MonoBehaviour
             _defeatMenu.gameObject.SetActive(false);
             if (newLive == true)
             {
-                _mainStats[0] = _script.speed;
-                _mainStats[2] = _script.jumpp;
-                _mainStats[1] = _script.hp;
+                mainStats[0] = _script.speed;
+                mainStats[2] = _script.jumpp;
+                mainStats[1] = _script.hp;
             }
 
         }
-        _hpText.text = _mainStats[1].ToString();
+        if (_script2.awardFinish == true)
+        {
+           _script2.awardFinish = false;
+           moneyGame += _script2.moneyGame;
+        }
        _moneyText.text = moneyGame.ToString();
-        _moneyTextTotal.text = moneyTotal.ToString();
+       _moneyTextTotal.text = moneyTotal.ToString();
+       _xpText.text = xpGame.ToString();
+
         if (_negativ == true)
         {
-            _fakeHp = Random.Range(0, 10000);
             _fakeMoney = Random.Range(0, 10000);
-            _hpText.text = _fakeHp.ToString();
             _moneyText.text = _fakeMoney.ToString();
         }
     }
+    //Выключение панели
     IEnumerator StopMHp()
     {
         yield return new WaitForSeconds(0.3f);
         _animMHp.SetBool("Mhp", false);
     }
+    //Назначение мани
     IEnumerator StopMoney()
     {
         moneyTrue = false;
@@ -290,6 +306,15 @@ public class Player : MonoBehaviour
         money += moneyTotal;
         PlayerPrefs.SetInt("money", money);
         yield return new WaitForSeconds(1);
+        xpGame = xpGame + moneyTotal * 10;
+    }
+    IEnumerator StartXp()
+    {
+        _xpTotal = 0;
+        while(_xpTotal <= xpGame)
+        {
+            _xpTotal++;
+        }
     }
     IEnumerator StopJump()
     {

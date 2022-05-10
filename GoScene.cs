@@ -21,4 +21,8 @@ public class GoScene : MonoBehaviour
     {
         SceneManager.LoadScene(4);
     }
+    public void Credits()
+    {
+        SceneManager.LoadScene(5);
+    }
 }

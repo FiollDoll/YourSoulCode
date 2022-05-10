@@ -19,8 +19,6 @@ public class map : MonoBehaviour
     public int PlatformTotal;
     public GameObject[] Platform = new GameObject[22];
     public GameObject PlatformStartGo;
-    public GameObject PlatformOn, PlatformOn1, PlatformOn2, PlatformOn3; //Разблокированные
-    public int PlatformOnInt, PlatformOnInt1, PlatformOnInt2, PlatformOnInt3; //Разблокированные
     private GameObject[] platformNegativ = new GameObject[1];
     [Header("Platform1")] //2 - второй мир
     public GameObject[] Platform1 = new GameObject[8];
@@ -36,10 +34,7 @@ public class map : MonoBehaviour
     void Start()
     {
         _script = GetComponent<award>();
-        PlatformOnInt = PlayerPrefs.GetInt("PlatformOnInt");
-        PlatformOnInt1 = PlayerPrefs.GetInt("PlatformOnInt1");
-        PlatformOnInt2 = PlayerPrefs.GetInt("PlatformOnInt2");
-        PlatformOnInt3 = PlayerPrefs.GetInt("PlatformOnInt3");
+
     }
     void OnTriggerEnter2D(Collider2D other)
     {

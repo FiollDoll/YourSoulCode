@@ -9,7 +9,7 @@ public class MenuMaun : MonoBehaviour
     public GameObject[] objects = new GameObject[3]; //Профиль сет, награды за уровень, прочее
     public string Name;
     public InputField ProfileInput;
-    public Slider OpSlider;
+    public Slider XpSlider;
     //Статы
     public int[] stats = new int[5]; //скорость, хп, монеты, прыжок, опыт, уровень
 
@@ -23,7 +23,7 @@ public class MenuMaun : MonoBehaviour
         stats[0] = PlayerPrefs.GetInt("speed");
         stats[2] = PlayerPrefs.GetInt("money");
         stats[3] = PlayerPrefs.GetInt("jumpp");
-        stats[4] = PlayerPrefs.GetInt("op");
+        stats[4] = PlayerPrefs.GetInt("xp");
         stats[5] = PlayerPrefs.GetInt("lvl");
     }
 
@@ -80,7 +80,7 @@ public class MenuMaun : MonoBehaviour
             objects[0].gameObject.SetActive(true);
         }
 
-        OpSlider.value = stats[4]; //Число опыта на слайдере
+        XpSlider.value = stats[4]; //Число опыта на слайдере
         texts[0].text = stats[5].ToString();
         texts[1].text = Name;
 
