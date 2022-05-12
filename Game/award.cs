@@ -28,7 +28,7 @@ public class award : MonoBehaviour
     public int moneyGame;
 
     public bool awardFinish;
-    void awards(int num)
+    private void awards(int num)
     {
         if (num == 0 && _skinCharacter[num] != 1)
         {
@@ -39,7 +39,7 @@ public class award : MonoBehaviour
             awardsInfo("Чучело", "fragmentOwn", 1);
         }
     }
-    void awardsInfo(string name, string fragmentOwnTotal, int num)
+    private void awardsInfo(string name, string fragmentOwnTotal, int num)
     {
         _fragment = name;
         _fragmentOwn[num] = PlayerPrefs.GetInt(fragmentOwnTotal);

@@ -11,14 +11,14 @@ public class Pref : MonoBehaviour
 
     [SerializeField] private int _postProcessing;
     [SerializeField] private GameObject _postProcessingObject;
-    void Start()
+    private void Start()
     {
         _JoyTransform = PlayerPrefs.GetInt("JoyTransform");
         _postProcessing = PlayerPrefs.GetInt("postProcessing");
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Положение джостика
         if (_JoyTransform == 0)

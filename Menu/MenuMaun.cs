@@ -5,84 +5,84 @@ using UnityEngine.UI;
 
 public class MenuMaun : MonoBehaviour
 {
-    public int FirstGame; //Первый запуск
-    public GameObject[] objects = new GameObject[3]; //Профиль сет, награды за уровень, прочее
-    public string Name;
-    public InputField ProfileInput;
-    public Slider XpSlider;
+    private int _FirstGame; //Первый запуск
+    [SerializeField] private GameObject[] _objects = new GameObject[3]; //Профиль сет, награды за уровень, прочее
+    [SerializeField] private string _Name;
+    [SerializeField] private InputField _ProfileInput;
+    [SerializeField] private Slider _XpSlider;
     //Статы
-    public int[] stats = new int[5]; //скорость, хп, монеты, прыжок, опыт, уровень
+    [SerializeField] private int[] _stats = new int[5]; //скорость, хп, монеты, прыжок, опыт, уровень
 
-    public Text[] texts = new Text[2]; //Уровень, Имя
+    [SerializeField] private Text[] _texts = new Text[2]; //Уровень, Имя
 
-    void Start()
+    private void Start()
     {
-        FirstGame = PlayerPrefs.GetInt("FirstGame");
-        Name = PlayerPrefs.GetString("Name");
-        stats[1] = PlayerPrefs.GetInt("hp");
-        stats[0] = PlayerPrefs.GetInt("speed");
-        stats[2] = PlayerPrefs.GetInt("money");
-        stats[3] = PlayerPrefs.GetInt("jumpp");
-        stats[4] = PlayerPrefs.GetInt("xp");
-        stats[5] = PlayerPrefs.GetInt("lvl");
+        _FirstGame = PlayerPrefs.GetInt("FirstGame");
+        _Name = PlayerPrefs.GetString("Name");
+        _stats[1] = PlayerPrefs.GetInt("hp");
+        _stats[0] = PlayerPrefs.GetInt("speed");
+        _stats[2] = PlayerPrefs.GetInt("money");
+        _stats[3] = PlayerPrefs.GetInt("jumpp");
+        _stats[4] = PlayerPrefs.GetInt("xp");
+        _stats[5] = PlayerPrefs.GetInt("lvl");
     }
 
     public void RewardMenuOpen()
     {
-        objects[1].gameObject.SetActive(true);
+        _objects[1].gameObject.SetActive(true);
     }
     public void RewardMenuClose()
     {
-        objects[1].gameObject.SetActive(false);
+        _objects[1].gameObject.SetActive(false);
     }
     public void ProfileSetMenu()
     {
-        objects[0].gameObject.SetActive(true);
+        _objects[0].gameObject.SetActive(true);
     }
     public void OtherMenuOpen()
     {
-        objects[2].gameObject.SetActive(true);
+       _objects[2].gameObject.SetActive(true);
     }
     public void OtherClose()
     {
-        objects[2].gameObject.SetActive(false);
+        _objects[2].gameObject.SetActive(false);
     }
     public void ProfileSetName()
     {
-        Name = ProfileInput.textComponent.text; //Назначение
-        if (Name == "" || Name == " " || Name == "  ") //Если поле пустое
+        _Name = _ProfileInput.textComponent.text; //Назначение
+        if (_Name == "" || _Name == " " || _Name == "  ") //Если поле пустое
         {
-            Name = "Игрок";
+            _Name = "Player";
         }
-        PlayerPrefs.SetString("Name", Name);
-        objects[0].gameObject.SetActive(false);
+        PlayerPrefs.SetString("Name", _Name);
+        _objects[0].gameObject.SetActive(false);
     }
     public void ProfileSetName1() //Кнопка дефолт
     {
-        Name = "Игрок";
-        PlayerPrefs.SetString("Name", Name);
-        objects[0].gameObject.SetActive(false);
+        _Name = "Player";
+        PlayerPrefs.SetString("Name", _Name);
+        _objects[0].gameObject.SetActive(false);
     }
-    void Update()
+    private void Update()
     {
-        if (FirstGame == 0)
+        if (_FirstGame == 0)
         {
-            stats[3] = 1000;
-            PlayerPrefs.SetInt("jumpp", stats[3]);
-            stats[0] = 6;
-            PlayerPrefs.SetInt("speed", stats[0]);
-            stats[1] = 3;
-            PlayerPrefs.SetInt("hp", stats[1]);
-            stats[5] = 1;
-            PlayerPrefs.SetInt("lvl", stats[5]);
-            FirstGame = 1;
-            PlayerPrefs.SetInt("FirstGame", FirstGame);
-            objects[0].gameObject.SetActive(true);
+            _stats[3] = 1000;
+            PlayerPrefs.SetInt("jumpp", _stats[3]);
+            _stats[0] = 6;
+            PlayerPrefs.SetInt("speed", _stats[0]);
+            _stats[1] = 3;
+            PlayerPrefs.SetInt("hp", _stats[1]);
+            _stats[5] = 1;
+            PlayerPrefs.SetInt("lvl", _stats[5]);
+            _FirstGame = 1;
+            PlayerPrefs.SetInt("FirstGame", _FirstGame);
+            _objects[0].gameObject.SetActive(true);
         }
 
-        XpSlider.value = stats[4]; //Число опыта на слайдере
-        texts[0].text = stats[5].ToString();
-        texts[1].text = Name;
+        _XpSlider.value = _stats[4]; //Число опыта на слайдере
+        _texts[0].text = _stats[5].ToString();
+        _texts[1].text = _Name;
 
     }
 }

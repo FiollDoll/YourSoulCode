@@ -5,30 +5,30 @@ using UnityEngine.UI;
 
 public class SuperMenu : MonoBehaviour
 {
-    private int loading;
-    public Text text;
-    public GameObject[] objects = new GameObject[3]; //Текст, кнопка, "Загрузка" - текст
+    private int _loading;
+    [SerializeField] private Text _text;
+    [SerializeField] private GameObject[] _objects = new GameObject[3]; //Текст, кнопка, "Загрузка" - текст
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         StartCoroutine("StartLoading");
     }
-    void Update()
+    private void Update()
     {
-        text.text = loading.ToString();
+        _text.text = _loading.ToString();
     }
     IEnumerator StartLoading()
     {
-        while (loading < 100)
+        while (_loading < 100)
         {
             yield return new WaitForSeconds(0.001f);
-            loading++;
+            _loading++;
         }
-        if (loading == 100)
+        if (_loading == 100)
         {
-            objects[0].gameObject.SetActive(false);
-            objects[2].gameObject.SetActive(false);
-            objects[1].gameObject.SetActive(true);
+            _objects[0].gameObject.SetActive(false);
+            _objects[2].gameObject.SetActive(false);
+            _objects[1].gameObject.SetActive(true);
 
         }
     }

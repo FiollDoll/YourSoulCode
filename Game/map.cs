@@ -39,12 +39,12 @@ public class map : MonoBehaviour
     [Header("Spawners")]
     public Transform Spawner;
 
-    void Start()
+    private void Start()
     {
         _script = GetComponent<award>();
 
     }
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "NegativTeleport" && other.gameObject.name != "PortalEnd")
         {
@@ -59,7 +59,7 @@ public class map : MonoBehaviour
             negativEnd = false;
         }
     }
-    void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         void SpawnPlatform(int platform, GameObject Go)
         {
@@ -205,31 +205,31 @@ public class map : MonoBehaviour
                 }
                 else if (PlatformTotal == 1)
                 {
-                    SpawnPlatform(0, Go);
+                    SpawnPlatform(1, Go);
                 }
                 else if (PlatformTotal == 2)
                 {
-                    SpawnPlatform(0, Go);
+                    SpawnPlatform(2, Go);
                 }
                 else if (PlatformTotal == 3)
                 {
-                    SpawnPlatform(0, Go);
+                    SpawnPlatform(3, Go);
                 }
                 else if (PlatformTotal == 4)
                 {
-                    SpawnPlatform(0, Go);
+                    SpawnPlatform(4, Go);
                 }
                 else if (PlatformTotal == 5)
                 {
-                    SpawnPlatform(0, Go);
+                    SpawnPlatform(5, Go);
                 }
                 else if (PlatformTotal == 6)
                 {
-                    SpawnPlatform(0, Go);
+                    SpawnPlatform(6, Go);
                 }
                 else if (PlatformTotal == 7)
                 {
-                    SpawnPlatform(0, Go);
+                    SpawnPlatform(7, Go);
                 }
                 else
                 {
@@ -241,7 +241,7 @@ public class map : MonoBehaviour
                 //Смена тега
                 GameObject Go = other.gameObject;
 
-                PlatformTotal = Random.Range(0, 1);
+                PlatformTotal = Random.Range(0, 2);
                 Debug.Log("True");
                 if (PlatformTotal == 0)
                 {
@@ -255,27 +255,37 @@ public class map : MonoBehaviour
                 }
                 else
                 {
-                    PlatformTotal = Random.Range(0, 1);
+                    PlatformTotal = Random.Range(0, 2);
                 }
             }
         }
     }
-    void Update()
+    private void Update()
     {
         moneyGame = Player.GetComponent<Player>().moneyGame; //Получение из другого скрипта
+        //Вкл/выкл текста
         if (moneyGame == 1)
         {
             textLocation[0].gameObject.SetActive(true);
         }
+        else if (moneyGame == 3)
+        {
+            textLocation[0].gameObject.SetActive(false);
+        }
+        //Смена локация
         else if (moneyGame == 19)
         {
             TotalWorld = 1;
         }
         else if (moneyGame == 20)
         {
-            textLocation[0].gameObject.SetActive(false);
             textLocation[1].gameObject.SetActive(true);
             camera.GetComponent<Camera>().backgroundColor = new Color32(94, 60, 71, 1);
+        }
+        else if (moneyGame == 22)
+        {
+        //Вкл/выкл текста
+            textLocation[1].gameObject.SetActive(false);
         }
         else if (moneyGame == 40)
         {

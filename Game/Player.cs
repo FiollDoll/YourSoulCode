@@ -55,16 +55,9 @@ public class Player : MonoBehaviour
     private walk _script3;
     [SerializeField] private bool _negativ;
 
-    [Header("Guys")]
-    // Переделать
-    public int RandomNum;
-    public GameObject GuyMenu;
-    public GameObject buttonGuy;
-    public GameObject text;
-    public GameObject text1;
-    public GameObject text2;
 
-    void Start()
+
+    private void Start()
     {
         _script = GetComponent<playerInfo>();
         _script1 = GetComponent<map>();
@@ -91,18 +84,6 @@ public class Player : MonoBehaviour
         //anim.SetBool("Jump", true);
         StartCoroutine("StopJump");
     }
-    void textChange(bool textActive, bool textActive1, bool textActive2)
-    {
-        text.gameObject.SetActive(textActive);
-        text1.gameObject.SetActive(textActive1);
-        text2.gameObject.SetActive(textActive2);
-    }
-    void menuOpen(bool menu, bool button)
-    {
-        GuyMenu.gameObject.SetActive(menu);
-        buttonGuy.gameObject.SetActive(button);
-    }
-
 
     //Продолжение
     private void OnCollisionEnter2D(Collision2D other)
@@ -132,14 +113,14 @@ public class Player : MonoBehaviour
             mainStats[0] -= 3;
         }
     }
-    void OnCollisionExit2D(Collision2D other)
+    private void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.name == "platformDebaff" || other.gameObject.name == "platformDebaff1" || other.gameObject.name == "platformDebaff2")
         {
             mainStats[0] = _script.speed;
         }
     }
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "BonusSpeed")
         {
@@ -156,25 +137,14 @@ public class Player : MonoBehaviour
             mainStats[1]++;
             other.gameObject.SetActive(false);
         }
-        if (other.gameObject.tag == "GlitchGuy" && other.gameObject.name == "GuyBad")
-        {
-            buttonGuy.gameObject.SetActive(true);
-        }
 
     }
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "GlitchGuy" && other.gameObject.name == "GuyBad")
-        {
-            buttonGuy.gameObject.SetActive(false);
-        }
-    }
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         //Убрать
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _rb.AddForce(new Vector2(0, mainStats[2] * 5));
+            _rb.AddForce(new Vector2(0, mainStats[2] * 4));
         }
         //Движение
         _moveInput = _joystick.Horizontal;
@@ -196,7 +166,7 @@ public class Player : MonoBehaviour
             //_anim.SetBool("Run", false);
         }
     }
-    void Update()
+    private void Update()
     {
         _negativ = _script1.negativ;
         _onGround = _script3.onGround;

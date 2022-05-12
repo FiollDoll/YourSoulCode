@@ -5,7 +5,7 @@ using UnityEngine;
 public class teleport : MonoBehaviour
 {
     [SerializeField] private Transform _teleportEnd;
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {

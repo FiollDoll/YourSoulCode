@@ -10,11 +10,11 @@ public class hp : MonoBehaviour
     [SerializeField] private GameObject[] hpSprite = new GameObject[10];
     private Player _script;
     
-    void Start()
+    private void Start()
     {
         _script = GetComponent<Player>();
     }
-    void Update()
+    private void Update()
     {
         _hp = _script.mainStats[1];
 		for (int i = 0; i < hpSprite.Length; i++)
