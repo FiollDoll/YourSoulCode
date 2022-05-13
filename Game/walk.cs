@@ -8,7 +8,14 @@ public class walk : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        onGround = true;
+        if (other.gameObject.tag == "barrier")
+        {
+            onGround = false;
+        }
+        else
+        {
+            onGround = true;
+        }
     }
     private void OnCollisionExit2D(Collision2D other)
     {

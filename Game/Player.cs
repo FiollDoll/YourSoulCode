@@ -95,20 +95,20 @@ public class Player : MonoBehaviour
             _animMHp.SetBool("Mhp", true);
             StartCoroutine("StopMHp");
         }
-        if (other.gameObject.tag == "PlatformUp")
+        else if (other.gameObject.tag == "PlatformUp")
         {
             moneyGame++;
-            Debug.Log("Ya helicopter");
         }
-        if (other.gameObject.name == "platformDebaff")
+        // Дебаф-платформы
+        else if (other.gameObject.name == "platformDebaff")
         {
             mainStats[0] -= 1;
         }
-        if (other.gameObject.name == "platformDebaff1")
+        else if (other.gameObject.name == "platformDebaff1")
         {
             mainStats[0] -= 2;
         }
-        if (other.gameObject.name == "platformDebaff2")
+        else if (other.gameObject.name == "platformDebaff2")
         {
             mainStats[0] -= 3;
         }
@@ -120,6 +120,7 @@ public class Player : MonoBehaviour
             mainStats[0] = _script.speed;
         }
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "BonusSpeed")
@@ -127,12 +128,12 @@ public class Player : MonoBehaviour
             mainStats[0] += 1;
             other.gameObject.SetActive(false);
         }
-        if (other.gameObject.tag == "BonusJump") //Изменено было
+        else if (other.gameObject.tag == "BonusJump") //Изменено было
         {
             mainStats[1]++;
             other.gameObject.SetActive(false);
         }
-        if (other.gameObject.tag == "BonusHp")
+        else if (other.gameObject.tag == "BonusHp")
         {
             mainStats[1]++;
             other.gameObject.SetActive(false);
@@ -189,14 +190,14 @@ public class Player : MonoBehaviour
             mainStats[2] = _script.jumpp;
             _timeRemaning = 7;
         }
-        newLive = _play.GetComponent<ad>().newLive; //Получение из другого скрипта
+        newLive = _play.GetComponent<ad>().newLive; // Получение из другого скрипта
         if (mainStats[1] <= 0) //Смерть
         {
             _defeatMenu.gameObject.SetActive(true);
             mainStats[0] = 0;
             mainStats[2] = 0;
             //GE.intensity = 0;
-            mainStats[1] = _play.GetComponent<ad>().hp; //Получение из другого скрипта
+            mainStats[1] = _play.GetComponent<ad>().hp; // Получение из другого скрипта
             if (moneyTrue == true)
             {
                 StartCoroutine("StopMoney");
@@ -220,6 +221,7 @@ public class Player : MonoBehaviour
            _script2.awardFinish = false;
            moneyGame += _script2.moneyGame;
         }
+        // Текста
        _moneyText.text = moneyGame.ToString();
        _moneyTextTotal.text = moneyTotal.ToString();
        _xpText.text = xpGame.ToString();
@@ -230,14 +232,14 @@ public class Player : MonoBehaviour
             _moneyText.text = _fakeMoney.ToString();
         }
     }
-    //Выключение панели
-    IEnumerator StopMHp()
+    // Выключение панели урона
+    private IEnumerator StopMHp()
     {
         yield return new WaitForSeconds(0.3f);
         _animMHp.SetBool("Mhp", false);
     }
-    //Назначение мани
-    IEnumerator StopMoney()
+    // Назначение денег
+    private IEnumerator StopMoney()
     {
         moneyTrue = false;
         while(moneyTotal < moneyGame)
@@ -250,7 +252,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1);
         xpGame = xpGame + moneyTotal * 10 + _script2.xp;
     }
-    IEnumerator StopJump()
+    private IEnumerator StopJump()
     {
         yield return new WaitForSeconds(0.2f);
         _anim.SetBool("Jump", false);

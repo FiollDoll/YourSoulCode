@@ -49,7 +49,7 @@ public class award : MonoBehaviour
     public void awardGenerate()
     {
         _panelAward.gameObject.SetActive(true);
-        _fragmentTotal = Random.Range(0, 2);
+        _fragmentTotal = Random.Range(0, 2); // Какой фрагмент
         _fragmentInt = Random.Range(0, 31);
         moneyGame = Random.Range(0, 11);
         xp = Random.Range(0, 101);

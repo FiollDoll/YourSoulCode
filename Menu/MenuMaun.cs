@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MenuMaun : MonoBehaviour
 {
     private int _FirstGame; //Первый запуск
+    //Другое
     [SerializeField] private GameObject[] _objects = new GameObject[3]; //Профиль сет, награды за уровень, прочее
     [SerializeField] private string _Name;
     [SerializeField] private InputField _ProfileInput;
@@ -14,17 +15,18 @@ public class MenuMaun : MonoBehaviour
     [SerializeField] private int[] _stats = new int[5]; //скорость, хп, монеты, прыжок, опыт, уровень
 
     [SerializeField] private Text[] _texts = new Text[2]; //Уровень, Имя
+    //Скрипт
+    private lvl _script;
 
     private void Start()
     {
+        _script = GetComponent<lvl>();
         _FirstGame = PlayerPrefs.GetInt("FirstGame");
         _Name = PlayerPrefs.GetString("Name");
         _stats[1] = PlayerPrefs.GetInt("hp");
         _stats[0] = PlayerPrefs.GetInt("speed");
         _stats[2] = PlayerPrefs.GetInt("money");
         _stats[3] = PlayerPrefs.GetInt("jumpp");
-        _stats[4] = PlayerPrefs.GetInt("xp");
-        _stats[5] = PlayerPrefs.GetInt("lvl");
     }
 
     public void RewardMenuOpen()
@@ -57,12 +59,14 @@ public class MenuMaun : MonoBehaviour
         PlayerPrefs.SetString("Name", _Name);
         _objects[0].gameObject.SetActive(false);
     }
+
     public void ProfileSetName1() //Кнопка дефолт
     {
         _Name = "Player";
         PlayerPrefs.SetString("Name", _Name);
         _objects[0].gameObject.SetActive(false);
     }
+
     private void Update()
     {
         if (_FirstGame == 0)
@@ -73,13 +77,19 @@ public class MenuMaun : MonoBehaviour
             PlayerPrefs.SetInt("speed", _stats[0]);
             _stats[1] = 3;
             PlayerPrefs.SetInt("hp", _stats[1]);
+            
             _stats[5] = 1;
             PlayerPrefs.SetInt("lvl", _stats[5]);
+
             _FirstGame = 1;
             PlayerPrefs.SetInt("FirstGame", _FirstGame);
             _objects[0].gameObject.SetActive(true);
         }
-
+        else
+        {
+            _stats[4] = _script.xp;
+            _stats[5] = _script.totalLvl;
+        }
         _XpSlider.value = _stats[4]; //Число опыта на слайдере
         _texts[0].text = _stats[5].ToString();
         _texts[1].text = _Name;

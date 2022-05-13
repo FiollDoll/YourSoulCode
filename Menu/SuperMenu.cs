@@ -7,7 +7,7 @@ public class SuperMenu : MonoBehaviour
 {
     private int _loading;
     [SerializeField] private Text _text;
-    [SerializeField] private GameObject[] _objects = new GameObject[3]; //Текст, кнопка, "Загрузка" - текст
+    [SerializeField] private GameObject[] _objects = new GameObject[3]; // Текст, кнопка, "Загрузка" - текст
     // Start is called before the first frame update
     private void Start()
     {

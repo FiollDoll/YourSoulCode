@@ -20,7 +20,7 @@ public class Pref : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //Положение джостика
+        // Положение джостика
         if (_JoyTransform == 0)
         {
             _JoystickTransform.localPosition = new Vector2(-1119, -478);
@@ -31,7 +31,7 @@ public class Pref : MonoBehaviour
             _JoystickTransform.localPosition = new Vector2(1181, -478);
             _Jump.localPosition = new Vector2(-1119, -478);
         }
-        //Графика
+        // Графика
         if (_postProcessing == 1)
         {
             _postProcessingObject.gameObject.SetActive(false);

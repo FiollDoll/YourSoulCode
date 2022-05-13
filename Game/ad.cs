@@ -12,7 +12,7 @@ public class ad : MonoBehaviour, IUnityAdsListener
     public int moneyGame;
     public bool newLive;
 
-    void Start()
+    private void Start()
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
@@ -49,9 +49,8 @@ public class ad : MonoBehaviour, IUnityAdsListener
             StartCoroutine("StopBonus");
         }
     }
-    IEnumerator StopBonus()
+    private IEnumerator StopBonus()
     {
-        Debug.Log("Vso");
         yield return new WaitForSeconds(2);
         newLive = false;
         yield return new WaitForSeconds(4);

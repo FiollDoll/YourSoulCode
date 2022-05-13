@@ -13,31 +13,28 @@ public class map : MonoBehaviour
     private bool negativEnd = true;
 
     public int moneyGame;
-    public GameObject Player;
-    public GameObject camera;
-    public GameObject[] textLocation = new GameObject[2];
+    [SerializeField] private GameObject Player;
+    [SerializeField] private GameObject camera;
+    [SerializeField] private GameObject[] textLocation = new GameObject[2];
     [SerializeField] private GameObject _negativEffect;
     public bool negativ;
     
     [Header("Platform")]
-    public int PlatformTotal;
-    public GameObject[] Platform = new GameObject[22];
-    public GameObject PlatformStartGo;
-    private GameObject[] platformNegativ = new GameObject[1];
+    [SerializeField] private int PlatformTotal;
+    [SerializeField] private GameObject[] Platform = new GameObject[22];
+        
+    [Header("Platform1")] 
+    [SerializeField] private GameObject[] Platform1 = new GameObject[8];
     
-    [Header("Platform1")] //2 - второй мир
-    public GameObject[] Platform1 = new GameObject[8];
-    
-    [Header("Platform2")] //2 - третий мир
-    public GameObject Platforme;
-    public GameObject Platform1e;
+    [Header("Platform2")] 
+    [SerializeField] private GameObject[] Platform2 = new GameObject[2];
     
     [Header("Platform+")]
-    public GameObject Platforms;
-    public bool PlatformSpawned;
+    [SerializeField] private GameObject[] Platforms = new GameObject[3]; // Продавец
+    [SerializeField] private bool[] PlatformSpawned = new bool[3]; // Было или нет
     
     [Header("Spawners")]
-    public Transform Spawner;
+    [SerializeField] private Transform Spawner;
 
     private void Start()
     {
@@ -177,9 +174,10 @@ public class map : MonoBehaviour
                 //Супер
                 else if (PlatformTotal == 23)
                 {
-                    if (PlatformSpawned == false)
+                    if (PlatformSpawned[0] == false)
                     {
-                        Instantiate(Platforms, Spawner.position, Quaternion.identity);
+                        PlatformSpawned[0] = true;
+                        Instantiate(Platforms[0], Spawner.position, Quaternion.identity);
                         Go.gameObject.tag = "Platform";
                     }
                     else
@@ -245,12 +243,12 @@ public class map : MonoBehaviour
                 Debug.Log("True");
                 if (PlatformTotal == 0)
                 {
-                    Instantiate(Platforme, Spawner.position, Quaternion.identity);
+                    Instantiate(Platform2[0], Spawner.position, Quaternion.identity);
                     Go.gameObject.tag = "Platform";
                 }
                 else if (PlatformTotal == 1)
                 {
-                    Instantiate(Platform1e, Spawner.position, Quaternion.identity);
+                    Instantiate(Platform2[0], Spawner.position, Quaternion.identity);
                     Go.gameObject.tag = "Platform";
                 }
                 else

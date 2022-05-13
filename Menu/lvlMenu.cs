@@ -5,5 +5,5 @@ using UnityEngine;
 public class lvlMenu : MonoBehaviour
 {
 
-//Сделать свапы
+// Сделать свапы
 }
