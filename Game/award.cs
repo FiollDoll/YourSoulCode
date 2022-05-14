@@ -22,30 +22,46 @@ public class award : MonoBehaviour
     [Header("SkinOwn")]
     //Разные персонажи
     [SerializeField] private int[] _skinCharacter = new int[2]; //0 - не имеется. Злой дух, чучело
-    [SerializeField] private int[] _skinCharacter1 = new int[2]; //0 - не имеется. Злой дух, чучело
-
+    [SerializeField] private int[] _skinCharacter1 = new int[2]; //0 - не имеется. 
     public int xp;
     public int moneyGame;
 
     public bool awardFinish;
+
+
+    private void Start()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            string strI = "skinCharacter" + i.ToString();
+            string strI1 = "skinCharacter1" + i.ToString();
+            _skinCharacter[i] = PlayerPrefs.GetInt(strI);
+            _skinCharacter1[i] = PlayerPrefs.GetInt(strI1);
+            Debug.Log(strI);
+            Debug.Log(strI1);
+        }
+    }
     private void awards(int num)
     {
         if (num == 0 && _skinCharacter[num] != 1)
         {
-            awardsInfo("Злой дух", "fragmentOwn", 0);
+            awardsInfo("Злой дух", "fragmentOwn0", 0);
         }
         else if (num == 1 && _skinCharacter[num] != 1)
         {
-            awardsInfo("Чучело", "fragmentOwn", 1);
+            awardsInfo("Чучело", "fragmentOwn1", 1);
         }
     }
+
     private void awardsInfo(string name, string fragmentOwnTotal, int num)
     {
         _fragment = name;
         _fragmentOwn[num] = PlayerPrefs.GetInt(fragmentOwnTotal);
         _fragmentOwn[num] = _fragmentOwn[num] + _fragmentInt;
-        PlayerPrefs.SetInt(fragmentOwnTotal, _fragmentOwn[num]);   
+        PlayerPrefs.SetInt(fragmentOwnTotal, _fragmentOwn[num]);  
+        Debug.Log(_fragmentOwn[num]);
     }
+
     public void awardGenerate()
     {
         _panelAward.gameObject.SetActive(true);
