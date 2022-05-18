@@ -71,6 +71,8 @@ public class MenuMaun : MonoBehaviour
     {
         if (_FirstGame == 0)
         {
+            _stats[5] = 1;
+            PlayerPrefs.SetInt("lvl", _stats[5]);
             _stats[3] = 1000;
             PlayerPrefs.SetInt("jumpp", _stats[3]);
             _stats[0] = 6;
@@ -78,8 +80,6 @@ public class MenuMaun : MonoBehaviour
             _stats[1] = 3;
             PlayerPrefs.SetInt("hp", _stats[1]);
             
-            _stats[5] = 1;
-            PlayerPrefs.SetInt("lvl", _stats[5]);
 
             _FirstGame = 1;
             PlayerPrefs.SetInt("FirstGame", _FirstGame);

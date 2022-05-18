@@ -18,20 +18,26 @@ public class ShopMain : MonoBehaviour
     [Header("Money")]
     public int money;
     public Text moneyText;
-    public int diamond;
-    public Text diamondText;
+    [SerializeField] private Text[] moneyTextToBuy = new Text[2];
+    [SerializeField] private Text moneyTextToBuyHave;
+    [SerializeField] private int price;
+
     [Header("Other")]
     private int TotalPageSkin;
     // Получение из скрипта
     private fragments _script;
     [SerializeField] private Text fragmentText;
+    [SerializeField] private Text fragmentTextToBuy;
+    [SerializeField] private GameObject panelBuy;
+    [SerializeField] private GameObject player; //Спрайт игрока
+    [SerializeField] private Sprite[] spritesSkin = new Sprite[1];
     
     private void Start()
     {
         _script = GetComponent<fragments>();
         money = PlayerPrefs.GetInt("money");
 
-        nameSkin = "Злой дух";
+        skinChanger(0);
         for (int i = 0; i < 2; i++)
         {
             string strI = "skinCharacter" + i.ToString();
@@ -41,6 +47,9 @@ public class ShopMain : MonoBehaviour
         }
     }
 
+
+
+//Скины
     // Включение страницы
     public void pageSkin()
     {
@@ -53,6 +62,7 @@ public class ShopMain : MonoBehaviour
         pageToPlayer.gameObject.SetActive(true);
     }
 
+    //Следующая и предыдующая страница
     public void pageUp()
     {
         TotalPageSkin++;
@@ -64,28 +74,46 @@ public class ShopMain : MonoBehaviour
         skinChanger(TotalPageSkin);
     }
 
+    //Открытие менюшки и закрытие
+    public void panelBuyOn()
+    {
+        panelBuy.gameObject.SetActive(true);
+    }
+    public void panelBuyOff()
+    {
+        panelBuy.gameObject.SetActive(false);
+    }
+
     // Информация о скине
-    private void skinInfo(string name)
+    private void skinInfo(string name, int moneyPrice)
     {
         nameSkin = name;
+        price = moneyPrice;
     }
     private void skinChanger(int num) // Сделать смену спрайтов
     {
         if (num == 0)
         {
-            skinInfo("Злой дух");
+            player.GetComponent<Image>().sprite = spritesSkin[0];
+            skinInfo("Злой дух", 200);
         }
        if (num == 1)
         {
-            skinInfo("Чучело");
+            player.GetComponent<Image>().sprite = spritesSkin[1];
+            skinInfo("Чучело", 300);
         }        
     }
     private void Update()
     {
         fragmentText.text = _script.fragmentOwn[TotalPageSkin].ToString();
+        fragmentTextToBuy.text = _script.fragmentOwn[TotalPageSkin].ToString();
+        nameSkinText.text = nameSkin;
+
         money = PlayerPrefs.GetInt("money");
         moneyText.text = money.ToString();
-        diamondText.text = diamond.ToString();
-        nameSkinText.text = nameSkin;
+        moneyTextToBuyHave.text = money.ToString();
+        moneyTextToBuy[0].text = price.ToString();
+        moneyTextToBuy[1].text = price.ToString();
+        
     }
 }

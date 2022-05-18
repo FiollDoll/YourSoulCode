@@ -19,8 +19,8 @@ public class lvl : MonoBehaviour
     }
     private void Start()
     {
-        totalLvl = PlayerPrefs.GetInt("lvl");
         xp = PlayerPrefs.GetInt("xp");
+        totalLvl = PlayerPrefs.GetInt("lvl");
     }
 
     // Update is called once per frame

@@ -12,7 +12,7 @@ public class ad : MonoBehaviour, IUnityAdsListener
     public int moneyGame;
     public bool newLive;
 
-    private void Start()
+    void Start()
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
@@ -29,15 +29,15 @@ public class ad : MonoBehaviour, IUnityAdsListener
     }
     public void OnUnityAdsReady(string placementId)
     {
-
+        Debug.Log("Ready");
     }
     public void OnUnityAdsDidError(string message)
     {
-
+        Debug.Log("Error");
     }
     public void OnUnityAdsDidStart(string placementId)
     {
-
+        Debug.Log("Start");
     }
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {
@@ -49,11 +49,12 @@ public class ad : MonoBehaviour, IUnityAdsListener
             StartCoroutine("StopBonus");
         }
     }
-    private IEnumerator StopBonus()
+    IEnumerator StopBonus()
     {
+        Debug.Log("Vso");
         yield return new WaitForSeconds(2);
         newLive = false;
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(5);
         hp = 0;
     }
 }

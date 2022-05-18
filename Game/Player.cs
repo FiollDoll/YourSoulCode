@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject _defeatMenu;
     [SerializeField] private GameObject _timeLine;
+    [SerializeField] private GameObject _menu;
     public GameObject Prossesing;
     
     // Статы
@@ -85,7 +86,19 @@ public class Player : MonoBehaviour
         StartCoroutine("StopJump");
     }
 
-    //Продолжение
+    public void MenuOpen()
+    {
+        _rb.isKinematic = true;
+        _menu.gameObject.SetActive(true);
+        _timeRemaning = 20;
+    }
+    
+    public void MenuClose()
+    {
+        _rb.isKinematic = false;
+        _timeRemaning = 7;
+       _menu.gameObject.SetActive(false);
+    }
     private void OnCollisionEnter2D(Collision2D other)
     {
         //Изменение хп
@@ -202,7 +215,6 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine("StopMoney");
             }
-            _xp = _xp + xpGame;
         }
         else
         {
@@ -251,7 +263,10 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetInt("money", money);
         yield return new WaitForSeconds(1);
         xpGame = xpGame + moneyTotal * 10 + _script2.xp;
+        _xp = _xp + xpGame;
+        PlayerPrefs.SetInt("xp", _xp);
     }
+
     private IEnumerator StopJump()
     {
         yield return new WaitForSeconds(0.2f);
