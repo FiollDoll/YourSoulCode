@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class Player : MonoBehaviour
@@ -47,6 +46,10 @@ public class Player : MonoBehaviour
     [SerializeField] private int _xp;
     [SerializeField] private Text _xpText;
 
+    [Header("Audio")]
+    [SerializeField] private GameObject audioManager;
+    [SerializeField] private AudioClip audioMoney;
+    [SerializeField] private AudioSource audio;
     [Header("Other")]
     public bool newLive;
     //Скрипты
@@ -54,6 +57,7 @@ public class Player : MonoBehaviour
     private map _script1;
     private award _script2;
     private walk _script3;
+    private UIEffects _script4;
     [SerializeField] private bool _negativ;
 
 
@@ -64,6 +68,7 @@ public class Player : MonoBehaviour
         _script1 = GetComponent<map>();
         _script2 = GetComponent<award>();
         _script3 = GetComponent<walk>();
+        _script4 = GetComponent<UIEffects>();
 
         _timeLine.gameObject.SetActive(true);
         _timeRemaning = 7;
@@ -78,6 +83,7 @@ public class Player : MonoBehaviour
         // Аниматик
         _anim = GetComponent<Animator>();
         _animMHp = _MHp.GetComponent<Animator>();
+        audio = audioManager.GetComponent<AudioSource>();
     }
     public void Jump()
     {
@@ -105,11 +111,13 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "EnemyKiller")
         {
             mainStats[1]--;
+            _script4.textShow(0);
             _animMHp.SetBool("Mhp", true);
             StartCoroutine("StopMHp");
         }
         else if (other.gameObject.tag == "PlatformUp")
         {
+            audio.PlayOneShot(audioMoney);
             moneyGame++;
         }
         // Дебаф-платформы
@@ -149,6 +157,7 @@ public class Player : MonoBehaviour
         else if (other.gameObject.tag == "BonusHp")
         {
             mainStats[1]++;
+            _script4.textShow(1);
             other.gameObject.SetActive(false);
         }
 

@@ -73,6 +73,7 @@ public class map : MonoBehaviour
         }
         if (other.gameObject.tag == "PlatformUp")
         {
+            //Первая локация
             if (TotalWorld == 0)
             {
                 //Смена тега
