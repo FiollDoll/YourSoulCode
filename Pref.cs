@@ -6,7 +6,8 @@ public class Pref : MonoBehaviour
     [SerializeField] private Transform _JoystickTransform;
     [SerializeField] private Transform _Jump;
     [SerializeField] private int _JoyTransform;
-
+    [SerializeField] private int totalButton;
+    [SerializeField] private GameObject[] buttons = new GameObject[1];
     [SerializeField] private int _postProcessing;
     [SerializeField] private GameObject _postProcessingObject;
     private void Start()
@@ -18,16 +19,17 @@ public class Pref : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // Положение джостика
-        if (_JoyTransform == 0)
+        if (totalButton == 0)
         {
-            _JoystickTransform.localPosition = new Vector2(-1119, -478);
-            _Jump.localPosition = new Vector2(1181, -478);
+            buttons[0].gameObject.SetActive(true);
+            buttons[1].gameObject.SetActive(false);
+
         }
-        if (_JoyTransform == 1)
+        else if (totalButton == 1)
         {
-            _JoystickTransform.localPosition = new Vector2(1181, -478);
-            _Jump.localPosition = new Vector2(-1119, -478);
+            buttons[1].gameObject.SetActive(true);
+            buttons[0].gameObject.SetActive(false);
+
         }
         // Графика
         if (_postProcessing == 1)

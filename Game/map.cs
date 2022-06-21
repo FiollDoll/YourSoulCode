@@ -11,7 +11,7 @@ public class map : MonoBehaviour
     [Header("Other")]
     private award _script;
     private bool negativEnd = true;
-
+    private bool startSpawn = true; // Спавн перехода
     public int moneyGame;
     [SerializeField] private GameObject Player;
     [SerializeField] private GameObject camera;
@@ -22,7 +22,7 @@ public class map : MonoBehaviour
     [Header("Platform")]
     [SerializeField] private int PlatformTotal;
     [SerializeField] private GameObject[] Platform = new GameObject[22];
-        
+    [SerializeField] private GameObject platofrmToNext;
     [Header("Platform1")] 
     [SerializeField] private GameObject[] Platform1 = new GameObject[8];
     
@@ -60,13 +60,16 @@ public class map : MonoBehaviour
     {
         void SpawnPlatform(int platform, GameObject Go)
         {
-            if (TotalWorld == 0)
+            if (moneyGame != 19 || moneyGame != 39) // Спавн обычных платформ
             {
-                Instantiate(Platform[platform], Spawner.position, Quaternion.identity);
-            }
-            else if (TotalWorld == 1)
-            {
-                Instantiate(Platform1[platform], Spawner.position, Quaternion.identity);
+                if (TotalWorld == 0)
+                {
+                    Instantiate(Platform[platform], Spawner.position, Quaternion.identity);
+                }
+                else if (TotalWorld == 1)
+                {
+                    Instantiate(Platform1[platform], Spawner.position, Quaternion.identity);
+                }
             }
 
             Go.gameObject.tag = "Platform";
@@ -272,23 +275,34 @@ public class map : MonoBehaviour
             textLocation[0].gameObject.SetActive(false);
         }
         //Смена локация
-        else if (moneyGame == 19)
+        else if (moneyGame >= 19 && TotalWorld == 0)
         {
+            if (startSpawn)
+            {
+                StartCoroutine("SpawnGoNext");
+            }
             TotalWorld = 1;
         }
-        else if (moneyGame == 20)
+        else if (moneyGame >= 20 && TotalWorld == 0)
         {
             textLocation[1].gameObject.SetActive(true);
             camera.GetComponent<Camera>().backgroundColor = new Color32(94, 60, 71, 1);
         }
-        else if (moneyGame == 22)
+        else if (moneyGame >= 22 && TotalWorld == 0)
         {
         //Вкл/выкл текста
             textLocation[1].gameObject.SetActive(false);
         }
-        else if (moneyGame == 40)
+        else if (moneyGame == 40 && TotalWorld == 1)
         {
+            Instantiate(platofrmToNext, Spawner.position, Quaternion.identity);
             TotalWorld = 2;
         }
+    }
+    private IEnumerator SpawnGoNext()
+    {
+        startSpawn = false;
+        yield return new WaitForSeconds(0.8f);
+        Instantiate(platofrmToNext, Spawner.position, Quaternion.identity);
     }
 }
